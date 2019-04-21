@@ -1,0 +1,8 @@
+rm -rf ${HOME}/.vim_runtime
+git clone https://github.com/amix/vimrc.git ${HOME}/.vim_runtime
+
+VIMRC=${HOME}/.vimrc
+[ -f $VIMRC  ] && { mv $VIMRC ${HOME}/._vimrc; }
+rm -rf $VIMRC
+
+echo "source ${PWD}/conf/vimrc" > $VIMRC
