@@ -1,14 +1,9 @@
-set runtimepath+=~/.vim_runtime
-
-source ~/.vim_runtime/vimrcs/basic.vim
-source ~/.vim_runtime/vimrcs/filetypes.vim
-source ~/.vim_runtime/vimrcs/plugins_config.vim
-source ~/.vim_runtime/vimrcs/extended.vim
-
 " try
 " source ~/.vim_runtime/my_configs.vim
 " catch
 " endtry
+
+set nofoldenable    " disable folding
 
 set mouse=a
 " set ttymouse=xterm2
@@ -48,3 +43,8 @@ autocmd VimEnter * silent !echo -ne "\033]1337;SetKeyLabel=F2=Quit\a"
 autocmd VimEnter * map <F2> :q!<CR>
 
 "autocmd VimLeave * silent !echo -ne "\033]1337;PopKeyLabels\a"
+"
+
+" 1 tab == 2 spaces
+set shiftwidth=2
+set tabstop=2
