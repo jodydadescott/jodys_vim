@@ -5,8 +5,8 @@ cd $(dirname $0)
 
 thisdir=$(pwd | sed -E "s-^$HOME($|(/.*))-~\2-")
 
-# rm -rf ~/.vim_runtime
-# git clone https://github.com/amix/vimrc.git ~/.vim_runtime
+rm -rf ~/.vim_runtime
+git clone https://github.com/amix/vimrc.git ~/.vim_runtime
 
 echo "set runtimepath+=~/.vim_runtime
 
