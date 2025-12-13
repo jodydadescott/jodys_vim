@@ -1,17 +1,14 @@
-#!/bin/sh
-set -e
+#!/bin/bash -e
 
-cd $(dirname $0)
+# cSpell:ignore vimrcs
 
-thisdir=$(pwd | sed -E "s-^$HOME($|(/.*))-~\2-")
+cd "$(dirname "$0")"
 
-rm -rf ~/.vim_runtime
-git clone https://github.com/amix/vimrc.git ~/.vim_runtime
-
-echo "set runtimepath+=~/.vim_runtime
-
-source ~/.vim_runtime/vimrcs/basic.vim
-source ~/.vim_runtime/vimrcs/filetypes.vim
-source ~/.vim_runtime/vimrcs/plugins_config.vim
-source ~/.vim_runtime/vimrcs/extended.vim
-source ${thisdir}/vimrcs/main.vim" > ~/.vimrc
+cat << EOF > "$HOME/.vimrc"
+set runtimepath+=$PWD
+source $PWD/vimrcs/basic.vim
+source $PWD/vimrcs/filetypes.vim
+source $PWD/vimrcs/plugins_config.vim
+source $PWD/vimrcs/extended.vim
+source $PWD/vimrcs/main.vim
+EOF
