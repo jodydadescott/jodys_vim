@@ -10,19 +10,33 @@ set mouse=a
 " set ttyfast
 
 " Fix cut and paste
-" When pasting into term toggle to paste mode and back
-if &term =~ "xterm.*"
-let &t_ti = &t_ti . "\e[?2004h"
-let &t_te = "\e[?2004l" . &t_te
-function XTermPasteBegin(ret)
-set pastetoggle=<Esc>[201~
-set paste
-return a:ret
-endfunction
-map <expr> <Esc>[200~ XTermPasteBegin("i")
-imap <expr> <Esc>[200~ XTermPasteBegin("")
-cmap <Esc>[200~ <nop>
-cmap <Esc>[201~ <nop>
+" Use bracketed paste mode if terminal supports it
+if has("patch-8.0.0238")
+  " Use built-in bracketed paste support in Vim 8.0.0238+
+  if &term =~ "screen\\|tmux\\|xterm\\|rxvt"
+    let &t_BE = "\e[?2004h"
+    let &t_BD = "\e[?2004l"
+    let &t_PS = "\e[200~"
+    let &t_PE = "\e[201~"
+  endif
+else
+  " Fallback for older Vim versions
+  if &term =~ "xterm.*\\|screen.*\\|tmux.*"
+    let &t_ti = &t_ti . "\e[?2004h"
+    let &t_te = "\e[?2004l" . &t_te
+    function! XTermPasteBegin(ret)
+      set pastetoggle=<Esc>[201~
+      set paste
+      return a:ret
+    endfunction
+    execute "set <f28>=\e[200~"
+    execute "set <f29>=\e[201~"
+    map <expr> <f28> XTermPasteBegin("i")
+    imap <expr> <f28> XTermPasteBegin("")
+    vmap <expr> <f28> XTermPasteBegin("")
+    cmap <f28> <nop>
+    cmap <f29> <nop>
+  endif
 endif
 
 " Powerline symbols are blurry, something to do with fonts
